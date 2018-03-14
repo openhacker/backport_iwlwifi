@@ -67,6 +67,7 @@
 #include "api/commands.h"
 #include "debugfs.h"
 #include "dbg.h"
+#include "api/rs.h"
 
 #define FWRT_DEBUGFS_OPEN_WRAPPER(name, buflen, argtype)		\
 struct dbgfs_##name##_data {						\
