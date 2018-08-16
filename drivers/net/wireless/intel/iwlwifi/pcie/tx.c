@@ -1231,7 +1231,7 @@ static void iwl_pcie_cmdq_reclaim(struct iwl_trans *trans, int txq_id, int idx)
 	lockdep_assert_held(&txq->lock);
 
 	if ((idx >= TFD_QUEUE_SIZE_MAX) || (!iwl_queue_used(txq, idx))) {
-		IWL_ERR(trans,
+		WARN_ONCE(test_bit(txq_id, trans_pcie->queue_used),
 			"%s: Read index for DMA queue txq id (%d), index %d is out of range [0-%d] %d %d.\n",
 			__func__, txq_id, idx, TFD_QUEUE_SIZE_MAX,
 			txq->write_ptr, txq->read_ptr);
