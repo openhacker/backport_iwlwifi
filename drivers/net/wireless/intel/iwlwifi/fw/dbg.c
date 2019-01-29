@@ -1713,8 +1713,6 @@ static void iwl_fw_dbg_update_triggers(struct iwl_fw_runtime *fwrt,
 		/* Since zero means infinity - just set to -1 */
 		if (!le32_to_cpu(trig->occurrences))
 			trig->occurrences = cpu_to_le32(-1);
-		if (!le32_to_cpu(trig->ignore_consec))
-			trig->ignore_consec = cpu_to_le32(-1);
 
 		iter += sizeof(*trig) +
 			le32_to_cpu(trig->num_regions) * sizeof(__le32);
