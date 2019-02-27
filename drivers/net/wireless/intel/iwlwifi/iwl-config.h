@@ -450,6 +450,7 @@ struct iwl_cfg {
 	u32 d3_debug_data_length;
 	u32 min_txq_size;
 	u32 umac_prph_offset;
+	u32 gp2_reg_addr;
 };
 
 extern const struct iwl_csr_params iwl_csr_v1;
