@@ -93,8 +93,7 @@ void backport_genl_dump_check_consistent(struct netlink_callback *cb,
 #endif
 #endif /* LINUX_VERSION_IS_LESS(4,15,0) */
 
-#if LINUX_VERSION_IS_LESS(4,20,0) && \
-	RHEL_RELEASE_CODE < RHEL_RELEASE_VERSION(7,6)
+#if LINUX_VERSION_IS_LESS(4,20,0)
 static inline int
 __real_backport_genl_register_family(struct genl_family *family)
 {
