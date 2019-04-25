@@ -798,17 +798,6 @@ void iwl_mvm_vif_dbgfs_register(struct iwl_mvm *mvm, struct ieee80211_vif *vif)
 		return;
 	}
 
-	if (!mvmvif->dbgfs_dir) {
-#if LINUX_VERSION_IS_GEQ(3,12,0)
-		IWL_ERR(mvm, "Failed to create debugfs directory under %pd\n",
-			dbgfs_dir);
-#else
-		IWL_ERR(mvm, "Failed to create debugfs directory under %s\n",
-			dbgfs_dir->d_name.name);
-#endif
-		return;
-	}
-
 	if (iwlmvm_mod_params.power_scheme != IWL_POWER_SCHEME_CAM &&
 	    ((vif->type == NL80211_IFTYPE_STATION && !vif->p2p) ||
 	     (vif->type == NL80211_IFTYPE_STATION && vif->p2p)))
