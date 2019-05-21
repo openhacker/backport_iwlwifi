@@ -516,6 +516,8 @@ static int iwl_run_unified_mvm_ucode(struct iwl_mvm *mvm, bool read_nvm)
 		}
 	}
 
+	mvm->rfkill_safe_init_done = true;
+
 	return 0;
 
 error:
@@ -632,7 +634,7 @@ int iwl_run_init_mvm_ucode(struct iwl_mvm *mvm, bool read_nvm)
 
 	lockdep_assert_held(&mvm->mutex);
 
-	if (WARN_ON_ONCE(mvm->calibrating))
+	if (WARN_ON_ONCE(mvm->rfkill_safe_init_done))
 		return 0;
 
 	iwl_init_notification_wait(&mvm->notif_wait,
@@ -685,7 +687,7 @@ int iwl_run_init_mvm_ucode(struct iwl_mvm *mvm, bool read_nvm)
 		goto remove_notif;
 	}
 
-	mvm->calibrating = true;
+	mvm->rfkill_safe_init_done = true;
 
 	/* Send TX valid antennas before triggering calibrations */
 	ret = iwl_send_tx_ant_cfg(mvm, iwl_mvm_get_valid_tx_ant(mvm));
@@ -721,7 +723,7 @@ int iwl_run_init_mvm_ucode(struct iwl_mvm *mvm, bool read_nvm)
 remove_notif:
 	iwl_remove_notification(&mvm->notif_wait, &calib_wait);
 out:
-	mvm->calibrating = false;
+	mvm->rfkill_safe_init_done = false;
 	if (iwlmvm_mod_params.init_dbg && !mvm->nvm_data) {
 		/* we want to debug INIT and we have no NVM - fake */
 		mvm->nvm_data = kzalloc(sizeof(struct iwl_nvm_data) +
