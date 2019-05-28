@@ -685,14 +685,8 @@ nl80211_coalesce_policy[NUM_NL80211_ATTR_COALESCE_RULE] = {
 /* policy for GTK rekey offload attributes */
 static const struct nla_policy
 nl80211_rekey_policy[NUM_NL80211_REKEY_DATA] = {
-	[NL80211_REKEY_DATA_KEK] = {
-		.type = NLA_EXACT_LEN_WARN,
-		.len = NL80211_KEK_LEN,
-	},
-	[NL80211_REKEY_DATA_KCK] = {
-		.type = NLA_EXACT_LEN_WARN,
-		.len = NL80211_KCK_LEN,
-	},
+	[NL80211_REKEY_DATA_KEK] = { .type = NLA_EXACT_LEN_WARN, .len = NL80211_KEK_LEN },
+	[NL80211_REKEY_DATA_KCK] = { .type = NLA_EXACT_LEN_WARN, .len = NL80211_KCK_LEN },
 	[NL80211_REKEY_DATA_REPLAY_CTR] = {
 		.type = NLA_EXACT_LEN_WARN,
 		.len = NL80211_REPLAY_CTR_LEN
@@ -4172,10 +4166,7 @@ static const struct nla_policy nl80211_txattr_policy[NL80211_TXRATE_MAX + 1] = {
 				    .len = NL80211_MAX_SUPP_RATES },
 	[NL80211_TXRATE_HT] = { .type = NLA_BINARY,
 				.len = NL80211_MAX_SUPP_HT_RATES },
-	[NL80211_TXRATE_VHT] = {
-		.type = NLA_EXACT_LEN_WARN,
-		.len = sizeof(struct nl80211_txrate_vht),
-	},
+	[NL80211_TXRATE_VHT] = { .type = NLA_EXACT_LEN_WARN, .len = sizeof(struct nl80211_txrate_vht)},
 	[NL80211_TXRATE_GI] = { .type = NLA_U8 },
 };
 
