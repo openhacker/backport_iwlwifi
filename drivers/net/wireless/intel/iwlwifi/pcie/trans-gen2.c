@@ -69,7 +69,15 @@ static int iwl_pcie_gen2_force_power_gating(struct iwl_trans *trans)
 	iwl_clear_bits_prph(trans, HPM_HIPM_GEN_CFG,
 			    HPM_HIPM_GEN_CFG_CR_FORCE_ACTIVE);
 
-	iwl_trans_sw_reset(trans);
+	/*
+	 * We usually call iwl_trans_pcie_sw_reset(), but in this case
+	 * we cannot sleep, so open-code the function here so we can
+	 * use mdelay() instead of usleep_range().
+	 */
+	iwl_set_bit(trans, trans->cfg->csr->addr_sw_reset,
+		    BIT(trans->cfg->csr->flag_sw_reset));
+	mdelay(5);
+
 	iwl_clear_bit(trans, CSR_GP_CNTRL,
 		      BIT(trans->cfg->csr->flag_init_done));
 
