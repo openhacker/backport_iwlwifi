@@ -1582,13 +1582,15 @@ out:
 #if LINUX_VERSION_IS_GEQ(5,4,0)
 	napi = &rxq->napi;
 	if (napi->poll) {
+		napi_gro_flush(napi, false);
+
+#if LINUX_VERSION_IS_GEQ(5,4,0)
 		if (napi->rx_count) {
 			netif_receive_skb_list(&napi->rx_list);
 			INIT_LIST_HEAD(&napi->rx_list);
 			napi->rx_count = 0;
 		}
-
-		napi_gro_flush(napi, false);
+#endif
 	}
 #endif
 
