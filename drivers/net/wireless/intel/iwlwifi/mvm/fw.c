@@ -1074,7 +1074,7 @@ static void iwl_mvm_tas_init(struct iwl_mvm *mvm)
 
 static int iwl_mvm_eval_dsm_indonesia_5g2(struct iwl_mvm *mvm)
 {
-	int ret = iwl_acpi_get_dsm_value((&mvm->fwrt)->dev, 0,
+	int ret = iwl_acpi_get_dsm_u8((&mvm->fwrt)->dev, 0,
 					 DSM_FUNC_ENABLE_INDONESIA_5G2);
 
 	IWL_DEBUG_RADIO(mvm,
@@ -1096,7 +1096,9 @@ static void iwl_mvm_lari_cfg(struct iwl_mvm *mvm)
 	/* apply more config masks here */
 
 	if (cmd.config_bitmap) {
-		IWL_DEBUG_RADIO(mvm, "sending LARI_CONFIG_CHANGE\n");
+		IWL_DEBUG_RADIO(mvm,
+				"sending LARI_CONFIG_CHANGE, config_bitmap=0x%x\n",
+				le32_to_cpu(cmd.config_bitmap));
 		ret = iwl_mvm_send_cmd_pdu(mvm,
 					   WIDE_ID(REGULATORY_AND_NVM_GROUP,
 						   LARI_CONFIG_CHANGE),
