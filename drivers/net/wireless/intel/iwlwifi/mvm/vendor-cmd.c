@@ -1203,6 +1203,9 @@ static int iwl_mvm_vendor_add_pasn_sta(struct wiphy *wiphy,
 	u32 tk_len, hltk_len, cipher;
 	int ret;
 
+	if (!vif)
+		return -ENODEV;
+
 	tb = iwl_mvm_parse_vendor_data(data, data_len);
 	if (IS_ERR(tb))
 		return PTR_ERR(tb);
@@ -1237,6 +1240,9 @@ static int iwl_mvm_vendor_remove_pasn_sta(struct wiphy *wiphy,
 	struct ieee80211_vif *vif = wdev_to_ieee80211_vif(wdev);
 	u8 *addr;
 	int ret;
+
+	if (!vif)
+		return -ENODEV;
 
 	tb = iwl_mvm_parse_vendor_data(data, data_len);
 	if (IS_ERR(tb))
