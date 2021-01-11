@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
 /*
- * Copyright (C) 2012-2014, 2018-2020 Intel Corporation
+ * Copyright (C) 2012-2014, 2018-2021 Intel Corporation
  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
  * Copyright (C) 2016-2017 Intel Deutschland GmbH
  */
@@ -1242,21 +1242,23 @@ static void iwl_mvm_tas_init(struct iwl_mvm *mvm)
 
 static u8 iwl_mvm_eval_dsm_indonesia_5g2(struct iwl_mvm *mvm)
 {
+	u8 value;
+
 	int ret = iwl_acpi_get_dsm_u8((&mvm->fwrt)->dev, 0,
 				      DSM_FUNC_ENABLE_INDONESIA_5G2,
-				      &iwl_guid);
+				      &iwl_guid, &value);
 
 	if (ret < 0)
 		IWL_DEBUG_RADIO(mvm,
 				"Failed to evaluate DSM function ENABLE_INDONESIA_5G2, ret=%d\n",
 				ret);
 
-	else if (ret >= DSM_VALUE_INDONESIA_MAX)
+	else if (value >= DSM_VALUE_INDONESIA_MAX)
 		IWL_DEBUG_RADIO(mvm,
-				"DSM function ENABLE_INDONESIA_5G2 return invalid value, ret=%d\n",
-				ret);
+				"DSM function ENABLE_INDONESIA_5G2 return invalid value, value=%d\n",
+				value);
 
-	else if (ret == DSM_VALUE_INDONESIA_ENABLE) {
+	else if (value == DSM_VALUE_INDONESIA_ENABLE) {
 		IWL_DEBUG_RADIO(mvm,
 				"Evaluated DSM function ENABLE_INDONESIA_5G2: Enabling 5g2\n");
 		return DSM_VALUE_INDONESIA_ENABLE;
@@ -1267,17 +1269,18 @@ static u8 iwl_mvm_eval_dsm_indonesia_5g2(struct iwl_mvm *mvm)
 
 static u8 iwl_mvm_eval_dsm_rfi(struct iwl_mvm *mvm)
 {
-	int ret = iwl_acpi_get_dsm_u8((&mvm->fwrt)->dev, 0, DSM_RFI_FUNC_ENABLE,
-				      &iwl_rfi_guid);
+	u8 value;
 
+	int ret = iwl_acpi_get_dsm_u8((&mvm->fwrt)->dev, 0, DSM_RFI_FUNC_ENABLE,
+				      &iwl_rfi_guid, &value);
 	if (ret < 0) {
 		IWL_DEBUG_RADIO(mvm, "Failed to get DSM RFI, ret=%d\n", ret);
 
-	} else if (ret >= DSM_VALUE_RFI_MAX) {
-		IWL_DEBUG_RADIO(mvm, "DSM RFI got invalid value, ret=%d\n",
-				ret);
+	} else if (value >= DSM_VALUE_RFI_MAX) {
+		IWL_DEBUG_RADIO(mvm, "DSM RFI got invalid value, value=%d\n",
+				value);
 
-	} else if (ret == DSM_VALUE_RFI_ENABLE) {
+	} else if (value == DSM_VALUE_RFI_ENABLE) {
 		IWL_DEBUG_RADIO(mvm, "DSM RFI is evaluated to enable\n");
 		return DSM_VALUE_RFI_ENABLE;
 	}
@@ -1290,26 +1293,28 @@ static u8 iwl_mvm_eval_dsm_rfi(struct iwl_mvm *mvm)
 
 static u8 iwl_mvm_eval_dsm_disable_srd(struct iwl_mvm *mvm)
 {
+	u8 value;
+
 	int ret = iwl_acpi_get_dsm_u8((&mvm->fwrt)->dev, 0,
 				      DSM_FUNC_DISABLE_SRD,
-				      &iwl_guid);
+				      &iwl_guid, &value);
 
 	if (ret < 0)
 		IWL_DEBUG_RADIO(mvm,
 				"Failed to evaluate DSM function DISABLE_SRD, ret=%d\n",
 				ret);
 
-	else if (ret >= DSM_VALUE_SRD_MAX)
+	else if (value >= DSM_VALUE_SRD_MAX)
 		IWL_DEBUG_RADIO(mvm,
-				"DSM function DISABLE_SRD return invalid value, ret=%d\n",
-				ret);
+				"DSM function DISABLE_SRD return invalid value, value=%d\n",
+				value);
 
-	else if (ret == DSM_VALUE_SRD_PASSIVE) {
+	else if (value == DSM_VALUE_SRD_PASSIVE) {
 		IWL_DEBUG_RADIO(mvm,
 				"Evaluated DSM function DISABLE_SRD: setting SRD to passive\n");
 		return DSM_VALUE_SRD_PASSIVE;
 
-	} else if (ret == DSM_VALUE_SRD_DISABLE) {
+	} else if (value == DSM_VALUE_SRD_DISABLE) {
 		IWL_DEBUG_RADIO(mvm,
 				"Evaluated DSM function DISABLE_SRD: disabling SRD\n");
 		return DSM_VALUE_SRD_DISABLE;
@@ -1349,9 +1354,9 @@ static void iwl_mvm_lari_cfg(struct iwl_mvm *mvm)
 				"sending LARI_CONFIG_CHANGE, config_bitmap=0x%x\n",
 				le32_to_cpu(cmd.config_bitmap));
 		cmd_ret = iwl_mvm_send_cmd_pdu(mvm,
-					       WIDE_ID(REGULATORY_AND_NVM_GROUP,
-						       LARI_CONFIG_CHANGE),
-					       0, cmd_size, &cmd);
+					   WIDE_ID(REGULATORY_AND_NVM_GROUP,
+						   LARI_CONFIG_CHANGE),
+					   0, cmd_size, &cmd);
 		if (cmd_ret < 0)
 			IWL_DEBUG_RADIO(mvm,
 					"Failed to send LARI_CONFIG_CHANGE (%d)\n",
