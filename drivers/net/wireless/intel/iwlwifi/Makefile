@@ -44,5 +44,6 @@ subdir-ccflags-y += $(call cc-option,-Wimplicit-fallthrough)
 obj-$(CPTCFG_IWLMVM)	+= mvm/
 obj-$(CPTCFG_IWLXVT)	+= xvt/
 
+obj-$(CPTCFG_IWLMEI)	+= mei/
 
 CFLAGS_iwl-devtrace.o := -I$(src)
