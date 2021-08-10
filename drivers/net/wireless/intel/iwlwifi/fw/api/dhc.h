@@ -22,6 +22,10 @@ enum iwl_dhc_table_id {
 enum iwl_dhc_umac_integration_table {
 	/* @DHC_INT_UMAC_TWT_OPERATION: trigger a TWT operation */
 	DHC_INT_UMAC_TWT_OPERATION = 4,
+	/**
+	 * @DHC_INTEGRATION_TLC_DEBUG_CONFIG: TLC debug
+	 */
+	DHC_INTEGRATION_TLC_DEBUG_CONFIG = 1,
 	/* @DHC_INTEGRATION_MAX: Maximum UMAC integration table entries */
 	DHC_INTEGRATION_MAX
 };
