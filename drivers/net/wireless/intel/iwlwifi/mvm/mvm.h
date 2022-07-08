@@ -89,6 +89,7 @@ extern const struct ieee80211_ops iwl_mvm_hw_ops;
 struct iwl_mvm_mod_params {
 	bool init_dbg;
 	int power_scheme;
+	bool print_unhandled_alg;
 };
 extern struct iwl_mvm_mod_params iwlmvm_mod_params;
 

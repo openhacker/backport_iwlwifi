@@ -59,6 +59,10 @@ module_param_named(power_scheme, iwlmvm_mod_params.power_scheme, int, 0444);
 MODULE_PARM_DESC(power_scheme,
 		 "power management scheme: 1-active, 2-balanced, 3-low power, default: 2");
 
+module_param_named(print_unhandled_alg, iwlmvm_mod_params.print_unhandled_alg, bool, 0644);
+MODULE_PARM_DESC(print_unhandled_alg, 
+		"when true, print unhandled_alg");
+
 #ifdef CPTCFG_IWLWIFI_DEVICE_TESTMODE
 static void iwl_mvm_rx_fw_logs(struct iwl_mvm *mvm,
 			       struct iwl_rx_cmd_buffer *rxb)

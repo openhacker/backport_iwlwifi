@@ -465,8 +465,10 @@ static int iwl_mvm_rx_crypto(struct iwl_mvm *mvm, struct ieee80211_sta *sta,
 		 * Also drop un-decrypted frames in monitor mode.
 		 */
 		if (!is_multicast_ether_addr(hdr->addr1) &&
-		    !mvm->monitor_on && net_ratelimit())
-			IWL_ERR(mvm, "%s Unhandled alg: 0x%x\n", __func__, status);
+		    !mvm->monitor_on && net_ratelimit()) {
+			if(true == iwlmvm_mod_params.print_unhandled_alg)
+				IWL_ERR(mvm, "%s Unhandled alg: 0x%x\n", __func__, status);
+		}
 	}
 
 	return 0;

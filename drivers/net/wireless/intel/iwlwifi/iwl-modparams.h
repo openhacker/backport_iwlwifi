@@ -92,6 +92,7 @@ struct iwl_mod_params {
 	bool remove_when_gone;
 	u32 enable_ini;
 	bool disable_11be;
+	bool print_unhandled_alg;
 
 };
 

@@ -260,6 +260,7 @@ struct iwl_dbg_cfg {
 	IWL_MOD_PARAM(int, led_mode)
 	IWL_MOD_PARAM(int, amsdu_size)
 	IWL_MOD_PARAM(int, swcrypto)
+	IWL_MOD_PARAM(bool, print_unhandled_alg)
 	IWL_MOD_PARAM(uint, disable_11n)
 	IWL_MOD_PARAM(u32, enable_ini)
 	IWL_DBG_CFG_BIN(he_ppe_thres)

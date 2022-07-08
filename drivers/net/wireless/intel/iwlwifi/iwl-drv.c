@@ -2274,6 +2274,10 @@ module_param_named(uapsd_disable, iwlwifi_mod_params.uapsd_disable, uint, 0644);
 MODULE_PARM_DESC(uapsd_disable,
 		 "disable U-APSD functionality bitmap 1: BSS 2: P2P Client (default: 3)");
 
+module_param_named(print_unhandled_alg, iwlwifi_mod_params.print_unhandled_alg, bool, 0644);
+MODULE_PARM_DESC(print_unhandled_alg, 
+			"print unhandled alg message");
+
 static int enable_ini_set(const char *arg, const struct kernel_param *kp)
 {
 	int ret = 0;
