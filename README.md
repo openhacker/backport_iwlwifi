@@ -11,7 +11,7 @@ Added a module configuration to turn off these messages (in iwlwifi and iwlmvm i
 
 # Building archive
 
-Checkout marty-packport branch.
+Checkout marty-backport branch.
 
 Follow instructions on:
     https://wireless.wiki.kernel.org/en/users/drivers/iwlwifi/core_release
